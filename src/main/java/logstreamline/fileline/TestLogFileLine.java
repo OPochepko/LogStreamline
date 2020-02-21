@@ -2,7 +2,7 @@ package logstreamline.fileline;
 
 import java.time.LocalDateTime;
 
-public class TestLogFileLine{
+public class TestLogFileLine {
     private final String user;
     private final String message;
     private final LocalDateTime dateTime;

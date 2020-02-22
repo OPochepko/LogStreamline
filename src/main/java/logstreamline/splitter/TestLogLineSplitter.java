@@ -8,12 +8,9 @@ public class TestLogLineSplitter implements LineSplitter<UserDateTimeMessageFile
 
     @Override
     public UserDateTimeMessageFileLine apply(String fileLine) {
-
         String user = getUserSubstring(fileLine);
         String message = getMessageSubstring(fileLine);
         LocalDateTime dateTime = LocalDateTime.parse(getDateTimeSubstring(fileLine));
-
-
         return new UserDateTimeMessageFileLine(user, message, dateTime, fileLine);
     }
 

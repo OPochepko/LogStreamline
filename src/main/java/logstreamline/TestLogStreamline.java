@@ -18,22 +18,20 @@ import java.util.stream.Collector;
 
 public class TestLogStreamline implements Runnable {
 
-
     public static PrintWriter pw;
+
     static Map<String, AtomicInteger> result = new ConcurrentHashMap<>();
+
     private Path inputFilePath;
 
     private Path outputFilePath;
-
-    //    @Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message" )
-    private boolean helpRequested = false;
-
 
     private Predicate<UserDateTimeMessageFileLine> filter;
 
     private Collector<UserDateTimeMessageFileLine, ?, Map<String, AtomicInteger>> collector;
 
     private LineSplitter<UserDateTimeMessageFileLine> splitter = new TestLogLineSplitter();
+
     private BiConsumer<UserDateTimeMessageFileLine, Map<String, AtomicInteger>> aggregator;
 
     public static void printResult() {
@@ -46,11 +44,6 @@ public class TestLogStreamline implements Runnable {
 
     public static void setPw(PrintWriter pw) {
         TestLogStreamline.pw = pw;
-    }
-
-    public void addFilter(Predicate<UserDateTimeMessageFileLine> predicate) {
-        if (filter == null) setFilter(predicate);
-        else filter = filter.and(predicate);
     }
 
     @Override
@@ -87,10 +80,6 @@ public class TestLogStreamline implements Runnable {
 
     public void setOutputFilePath(Path outputFilePath) {
         this.outputFilePath = outputFilePath;
-    }
-
-    public boolean isHelpRequested() {
-        return helpRequested;
     }
 
     public Predicate<UserDateTimeMessageFileLine> getFilter() {

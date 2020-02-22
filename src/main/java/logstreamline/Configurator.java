@@ -3,6 +3,7 @@ package logstreamline;
 import logstreamline.aggregator.Aggregator;
 import logstreamline.fileline.UserDateTimeMessageFileLine;
 import logstreamline.filter.LocalDateTimeFileLineFilter;
+import logstreamline.filter.MessageFleLineFilter;
 import logstreamline.filter.UserFileLineFilter;
 import logstreamline.splitter.TestLogLineSplitter;
 import picocli.CommandLine;
@@ -36,8 +37,8 @@ public class Configurator implements Callable<Integer> {
     @CommandLine.Option(names = {"-ft", "-filterTo"}, description = "Date and Time in LocalDateTime format for filter (to)", defaultValue = "-999999999-01-01T00:00:00")
     private String filterToDate;
 
-//    @CommandLine.Option(names = {"-fm","-filterMessage"}, description = "Regex for message to filter", defaultValue = "(?s).*")
-//    private Spring filterMessage;
+    @CommandLine.Option(names = {"-fm", "-filterMessage"}, description = "Regex for message to filter", defaultValue = "(?s).*")
+    private String filterMessage;
 
     @CommandLine.Option(names = {"-au", "-aggregateByUser"}, description = "Enable aggregation of result by user(at least one aggregation should be on)", defaultValue = "true")
     private boolean aggregateByUser;
@@ -48,23 +49,15 @@ public class Configurator implements Callable<Integer> {
     @CommandLine.Option(names = {"-tn", "-threadNumber"}, description = "Number of threads to work", defaultValue = "1")
     private int threadNum;
 
-
     private Predicate filter;
 
-
     private BiConsumer aggregator;
-
-
-//    private Aggregator aggregator;
-//
-//    TestLogStreamline streamline = new TestLogStreamline();
 
     @Override
     public Integer call() throws Exception {
         TestLogLineSplitter splitter = new TestLogLineSplitter();
         formFilter();
         formAggregator();
-
         TestLogStreamline.pw = new PrintWriter(Files.newBufferedWriter(Path.of(resultOutPath)));
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNum);
         try (Stream<Path> paths = Files.walk(Path.of(logInputPath))) {
@@ -76,15 +69,10 @@ public class Configurator implements Callable<Integer> {
                         testLogStreamline.setInputFilePath(inputFile);
                         executor.execute(testLogStreamline);
                     });
-//        }
             executor.shutdown();
             while (!executor.isTerminated()) {
             }
             TestLogStreamline.printResult();
-//
-//
-            System.out.println("-in :" + logInputPath + " -out :" + resultOutPath + " -fu :" + filterUser + " -ff :" + filterFromDate + " -ft :" + filterToDate
-                    + " au:" + aggregateByUser + " -at :" + aggregateTimeUnit);
             return null;
         }
     }
@@ -92,7 +80,8 @@ public class Configurator implements Callable<Integer> {
     private void formAggregator() {
         if (aggregateByUser) addAggregator(new Aggregator<UserDateTimeMessageFileLine, String>(v -> v.getUser()));
         if (aggregateTimeUnit != null)
-            addAggregator(new Aggregator<UserDateTimeMessageFileLine, String>(v -> v.getDateTime().format(Formatters.valueOf(aggregateTimeUnit).getFormatter())));
+            addAggregator(new Aggregator<UserDateTimeMessageFileLine, String>(v -> v.getDateTime()
+                    .format(FilterTimeUnit.valueOf(aggregateTimeUnit).getFormatter())));
     }
 
     private void addAggregator(Aggregator<UserDateTimeMessageFileLine, String> aggregator) {
@@ -102,7 +91,9 @@ public class Configurator implements Callable<Integer> {
 
     private void formFilter() {
         if (filterUser != null) addFilter(new UserFileLineFilter(filterUser));
-        addFilter(new LocalDateTimeFileLineFilter<UserDateTimeMessageFileLine>(LocalDateTime.parse(filterFromDate), LocalDateTime.parse(filterToDate)));
+        addFilter(new LocalDateTimeFileLineFilter<UserDateTimeMessageFileLine>(LocalDateTime.parse(filterFromDate)
+                , LocalDateTime.parse(filterToDate)));
+        addFilter(new MessageFleLineFilter(filterMessage));
     }
 
     private void addFilter(Predicate filter) {

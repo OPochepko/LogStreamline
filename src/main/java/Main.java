@@ -4,7 +4,7 @@ import picocli.CommandLine;
 public class Main {
     public static void main(String[] args) throws Exception {
         for (String s : args) {
-            System.out.println(s);
+            System.out.print(s + " ");
         }
         new CommandLine(new Configurator()).execute(args);
 //        new CommandLine(new Configurator()).execute("-in", "F:\\Temp\\LogStreamline\\testlogs",

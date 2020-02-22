@@ -2,12 +2,12 @@ package logstreamline;
 
 import java.time.format.DateTimeFormatter;
 
-public enum Formatters {
+public enum FilterTimeUnit {
     SECOND("yyyy/MM/dd | HH:mm:ss"), MINUTE("yyyy/MM/dd | HH:mm"), HOUR("yyyy/MM/dd | HH"), DAY("yyyy/MM/dd"), MONTH("yyyy/MM"), YEAR("yyyy");
     private String pattern;
 
 
-    Formatters(String pattern) {
+    FilterTimeUnit(String pattern) {
         this.pattern = pattern;
     }
 

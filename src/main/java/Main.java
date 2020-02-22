@@ -1,6 +1,6 @@
 import logstreamline.Formatters;
 import logstreamline.TestLogStreamline;
-import logstreamline.aggregator.StringAggregator;
+import logstreamline.aggregator.Aggregator;
 import logstreamline.fileline.UserDateTimeMessageFileLine;
 import logstreamline.filter.LocalDateTimeFileLineFilter;
 
@@ -19,7 +19,7 @@ public class Main {
         Path result = Path.of("F:\\Temp\\LogStreamline\\result.log");
         PrintWriter pw = new PrintWriter(Files.newBufferedWriter(result));
         TestLogStreamline.pw = pw;
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(50);
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
         try (Stream<Path> paths = Files.walk(folder)) {
             paths
                     .filter(Files::isRegularFile)
@@ -27,7 +27,7 @@ public class Main {
                         TestLogStreamline testLogStreamline = new TestLogStreamline();
 //                        testLogStreamline.addFilter(new UserFileLineFilter("Mr. Meeseeks"));
                         testLogStreamline.addFilter(new LocalDateTimeFileLineFilter(LocalDateTime.parse("2020-02-17T06:12:01"), LocalDateTime.parse("2020-03-02T06:12:01")));
-                        testLogStreamline.setAggregator(new StringAggregator<UserDateTimeMessageFileLine>(v -> v.getDateTime().format(Formatters.DAY.getFormatter())));
+                        testLogStreamline.setAggregator(new Aggregator<UserDateTimeMessageFileLine, String>(v -> v.getDateTime().format(Formatters.DAY.getFormatter())));
                         testLogStreamline.setInputFilePath(r);
                         executor.execute(testLogStreamline);
                     });

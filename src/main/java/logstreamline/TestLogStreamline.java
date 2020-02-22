@@ -21,10 +21,8 @@ public class TestLogStreamline implements Runnable {
 
     public static PrintWriter pw;
     static Map<String, AtomicInteger> result = new ConcurrentHashMap<>();
-    //    @Option(names = {"-i","-inputFile"}, description = "path of input file", interactive = true)
     private Path inputFilePath;
 
-    //    @Option(names = {"-o","-outputFile"}, description = "path of output file", interactive = true)
     private Path outputFilePath;
 
     //    @Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message" )

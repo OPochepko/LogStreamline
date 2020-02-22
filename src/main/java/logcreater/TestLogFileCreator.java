@@ -17,8 +17,8 @@ public class TestLogFileCreator {
         Logger logger = LoggerFactory.getLogger(TestLogFileCreator.class);
 
 
-        List<String> users = Arrays.asList("Birdperson", "Mr. Meeseeks","Elon Tusk", "Glar", "Izzy");
-        List<String> actions = Arrays.asList("ate", "bought","sold", "found", "destroyed");
+        List<String> users = Arrays.asList("Birdperson", "Mr.Meeseeks", "Elon Tusk", "Glar", "Izzy");
+        List<String> actions = Arrays.asList("ate", "bought", "sold", "found", "destroyed");
         List<String> objects = Arrays.asList("Plumbus", "Flurbo","Smidgen", "Glaagnar", "Glem");
         LocalDateTime now = now();
 

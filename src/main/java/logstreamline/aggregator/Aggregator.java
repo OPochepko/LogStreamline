@@ -7,15 +7,15 @@ import java.util.function.Function;
 
 public class Aggregator<T, V> implements BiConsumer<T, Map<V, AtomicInteger>> {
 
-    private Function<T, V> function;
+    private Function<T, V> argumenToMapValue;
 
     public Aggregator(Function<T, V> function) {
-        this.function = function;
+        this.argumenToMapValue = function;
     }
 
     @Override
     public void accept(T t, Map<V, AtomicInteger> map) {
-        map.merge(function.apply(t), new AtomicInteger(1),
+        map.merge(argumenToMapValue.apply(t), new AtomicInteger(1),
                 (oldVal, newVal) -> new AtomicInteger(oldVal.addAndGet(newVal.get())));
     }
 }

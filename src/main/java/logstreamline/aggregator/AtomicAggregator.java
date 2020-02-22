@@ -5,17 +5,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class Aggregator<T, V> implements BiConsumer<T, Map<V, AtomicInteger>> {
+public class AtomicAggregator<T, V> implements BiConsumer<T, Map<V, AtomicInteger>> {
 
-    private Function<T, V> argumenToMapValue;
+    private Function<T, V> argumentToMapKey;
 
-    public Aggregator(Function<T, V> function) {
-        this.argumenToMapValue = function;
+    public AtomicAggregator(Function<T, V> argumentToMapKey) {
+        this.argumentToMapKey = argumentToMapKey;
     }
 
     @Override
     public void accept(T t, Map<V, AtomicInteger> map) {
-        map.merge(argumenToMapValue.apply(t), new AtomicInteger(1),
+        map.merge(argumentToMapKey.apply(t), new AtomicInteger(1),
                 (oldVal, newVal) -> new AtomicInteger(oldVal.addAndGet(newVal.get())));
     }
 }

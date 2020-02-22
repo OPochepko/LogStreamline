@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class UserDateTimeMessageFileLine {
     private final String user;
     private final String message;
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
     private final String fileLine;
 
     public UserDateTimeMessageFileLine(String user, String message, LocalDateTime dateTime, String fileLine) {
@@ -18,6 +18,10 @@ public class UserDateTimeMessageFileLine {
 
     public String getFileLine() {
         return fileLine;
+    }
+
+    void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getUser() {

@@ -59,11 +59,8 @@ public class TestLogStreamline implements Runnable {
             long i = Files.lines(inputFilePath)
                     .map(splitter)
                     .filter(filter)
-//                    .peek(System.out::println)
                     .peek(pw::println)
                     .peek(r -> aggregator.accept(r, result))
-//                    .peek(r -> result.merge(r.getUser(), new AtomicInteger(1),
-//                            (oldVal, newVal) -> new AtomicInteger(oldVal.addAndGet(newVal.get()))))
                     .count();
 
         } catch (IOException e) {

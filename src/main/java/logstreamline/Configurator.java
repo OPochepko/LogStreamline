@@ -76,7 +76,8 @@ public class Configurator implements Callable<Integer> {
         formFilter();
         formAggregator();
         //
-        TestLogStreamline.pw = new PrintWriter(Files.newBufferedWriter(Path.of(resultOutPath)));
+
+        TestLogStreamline.setPw(new PrintWriter(Files.newBufferedWriter(Path.of(resultOutPath))));
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNum);
         try (Stream<Path> paths = Files.walk(Path.of(logInputPath))) {
             paths.filter(Files::isRegularFile)

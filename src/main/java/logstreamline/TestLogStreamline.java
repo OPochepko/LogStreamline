@@ -18,7 +18,7 @@ import java.util.stream.Collector;
 
 public class TestLogStreamline implements Runnable {
 
-    public static PrintWriter pw;
+    private static PrintWriter pw;
 
     static Map<String, AtomicInteger> result = new ConcurrentHashMap<>();
 
@@ -42,10 +42,6 @@ public class TestLogStreamline implements Runnable {
         }
     }
 
-    public static void setPw(PrintWriter pw) {
-        TestLogStreamline.pw = pw;
-    }
-
     @Override
     public void run() {
         try {
@@ -55,11 +51,14 @@ public class TestLogStreamline implements Runnable {
                     .peek(pw::println)
                     .peek(r -> aggregator.accept(r, result))
                     .count();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         pw.flush();
+    }
+
+    public static void setPw(PrintWriter pw) {
+        TestLogStreamline.pw = pw;
     }
 
     public void setAggregator(BiConsumer<UserDateTimeMessageFileLine, Map<String, AtomicInteger>> aggregator) {

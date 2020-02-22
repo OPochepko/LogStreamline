@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.time.LocalDateTime.now;
-import static java.util.concurrent.ThreadLocalRandom.current;
 
 public class TestLogFileCreator {
     public static void main(String[] args) {
@@ -24,11 +23,11 @@ public class TestLogFileCreator {
         LocalDateTime now = now();
 
 
-        for (int i=0;i<100;i++){
+        for (int i = 0; i < 200; i++) {
             String randomUser = users.get(getRandomInt());
             logger.debug(String.format("User : %s; %s - %s %s %s.",
                     randomUser,
-                    now().plusDays(i*getRandomInt()).plusHours(i*getRandomInt()).plusMinutes(i*getRandomInt())
+                    now().plusDays(i * getRandomInt()).plusHours(i + getRandomInt()).plusMinutes(i + getRandomInt())
                             .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                     randomUser,
                     actions.get(getRandomInt()),

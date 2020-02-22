@@ -2,18 +2,22 @@ package logstreamline.fileline;
 
 import java.time.LocalDateTime;
 
-public class TestLogFileLine {
+public class UserDateTimeMessageFileLine {
     private final String user;
     private final String message;
     private final LocalDateTime dateTime;
     private final String fileLine;
 
-    public TestLogFileLine(String user, String message, LocalDateTime dateTime, String fileLine) {
+    public UserDateTimeMessageFileLine(String user, String message, LocalDateTime dateTime, String fileLine) {
 
         this.user = user;
         this.message = message;
         this.dateTime = dateTime;
         this.fileLine = fileLine;
+    }
+
+    public String getFileLine() {
+        return fileLine;
     }
 
     public String getUser() {
@@ -31,9 +35,7 @@ public class TestLogFileLine {
     @Override
     public String toString() {
         return "TestLogFileLine{" +
-                "user='" + user + '\'' +
-                ", message='" + message + '\'' +
-                ", dateTime=" + dateTime +
+                "fileLine='" + fileLine + '\'' +
                 '}';
     }
 }

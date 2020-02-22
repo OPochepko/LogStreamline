@@ -1,10 +1,10 @@
 package logstreamline.filter;
 
-import logstreamline.fileline.TestLogFileLine;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.util.function.Predicate;
 
-public class UserFileLineFilter implements Predicate<TestLogFileLine> {
+public class UserFileLineFilter implements Predicate<UserDateTimeMessageFileLine> {
 
     private final String user;
 
@@ -13,8 +13,8 @@ public class UserFileLineFilter implements Predicate<TestLogFileLine> {
     }
 
     @Override
-    public boolean test(TestLogFileLine testLogFileLine) {
-        return testLogFileLine.getUser().equals(user);
+    public boolean test(UserDateTimeMessageFileLine userDateTimeMessageFileLine) {
+        return userDateTimeMessageFileLine.getUser().equals(user);
     }
 
 

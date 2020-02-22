@@ -1,10 +1,10 @@
 package logstreamline.filter;
 
-import logstreamline.fileline.TestLogFileLine;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.util.function.Predicate;
 
-public class MessageFleLineFilter implements Predicate<TestLogFileLine> {
+public class MessageFleLineFilter implements Predicate<UserDateTimeMessageFileLine> {
     private final String regex;
 
     public MessageFleLineFilter(String regex) {
@@ -12,7 +12,7 @@ public class MessageFleLineFilter implements Predicate<TestLogFileLine> {
     }
 
     @Override
-    public boolean test(TestLogFileLine testLogFileLine) {
-        return testLogFileLine.getMessage().matches(regex);
+    public boolean test(UserDateTimeMessageFileLine userDateTimeMessageFileLine) {
+        return userDateTimeMessageFileLine.getMessage().matches(regex);
     }
 }

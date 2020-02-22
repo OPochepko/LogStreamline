@@ -1,23 +1,43 @@
+import logstreamline.Formatters;
 import logstreamline.TestLogStreamline;
-import logstreamline.aggregator.TestLogFileLineAggregator;
+import logstreamline.aggregator.StringAggregator;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 import logstreamline.filter.LocalDateTimeFileLineFilter;
-import logstreamline.filter.MessageFleLineFilter;
-import logstreamline.splitter.TestLogLineSplitter;
 
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+//        F:\Temp\LogStreamline\testlogs
+        Path folder = Path.of("F:\\Temp\\LogStreamline\\testlogs");
+        Path result = Path.of("F:\\Temp\\LogStreamline\\result.log");
+        PrintWriter pw = new PrintWriter(Files.newBufferedWriter(result));
+        TestLogStreamline.pw = pw;
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(50);
+        try (Stream<Path> paths = Files.walk(folder)) {
+            paths
+                    .filter(Files::isRegularFile)
+                    .forEach(r -> {
+                        TestLogStreamline testLogStreamline = new TestLogStreamline();
+//                        testLogStreamline.addFilter(new UserFileLineFilter("Mr. Meeseeks"));
+                        testLogStreamline.addFilter(new LocalDateTimeFileLineFilter(LocalDateTime.parse("2020-02-17T06:12:01"), LocalDateTime.parse("2020-03-02T06:12:01")));
+                        testLogStreamline.setAggregator(new StringAggregator<UserDateTimeMessageFileLine>(v -> v.getDateTime().format(Formatters.DAY.getFormatter())));
+                        testLogStreamline.setInputFilePath(r);
+                        executor.execute(testLogStreamline);
+                    });
+        }
 
-        TestLogStreamline testLogStreamline = new TestLogStreamline();
-        testLogStreamline.setSplitter(new TestLogLineSplitter());
-        testLogStreamline.addFilter(new MessageFleLineFilter("^[^\\d].*"));
-        testLogStreamline.addFilter(new LocalDateTimeFileLineFilter(LocalDateTime.parse("2020-05-17T06:12:01"), LocalDateTime.parse("2020-12-17T06:12:01")));
-        testLogStreamline.setCollector(TestLogFileLineAggregator.byUsername());
-        testLogStreamline.setInputFilePath(Path.of("F:\\Temp\\LogStreamline\\TestLog.log"));
-        testLogStreamline.setOutputFilePath(Path.of("F:\\Temp\\LogStreamline\\TestLogAnswer.log"));
+        executor.shutdown();
 
-        testLogStreamline.call();
+        while (!executor.isTerminated()) {
+        }
+        TestLogStreamline.printResult();
+
     }
 }

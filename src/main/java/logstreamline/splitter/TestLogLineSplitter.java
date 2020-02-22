@@ -1,20 +1,20 @@
 package logstreamline.splitter;
 
-import logstreamline.fileline.TestLogFileLine;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
 
-public class TestLogLineSplitter implements LineSplitter<TestLogFileLine> {
+public class TestLogLineSplitter implements LineSplitter<UserDateTimeMessageFileLine> {
 
     @Override
-    public TestLogFileLine apply(String logLine) {
+    public UserDateTimeMessageFileLine apply(String fileLine) {
 
-        String user = getUserSubstring(logLine);
-        String message = getMessageSubstring(logLine);
-        LocalDateTime dateTime = LocalDateTime.parse(getDateTimeSubstring(logLine));
+        String user = getUserSubstring(fileLine);
+        String message = getMessageSubstring(fileLine);
+        LocalDateTime dateTime = LocalDateTime.parse(getDateTimeSubstring(fileLine));
 
 
-        return new TestLogFileLine(user,message,dateTime,logLine);
+        return new UserDateTimeMessageFileLine(user, message, dateTime, fileLine);
     }
 
     private String getMessageSubstring(String string){

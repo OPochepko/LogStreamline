@@ -1,21 +1,24 @@
 package logstreamline.aggregator;
 
+import logstreamline.fileline.FileLine;
+
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class AtomicAggregator<T, V> implements BiConsumer<T, Map<V, AtomicInteger>> {
+public class StringAtomicToMapAggregatorImpl<T extends FileLine> implements StringAtomicToMapAggregator<T> {
 
-    private Function<T, V> argumentToMapKey;
+    private Function<T, String> argumentToMapKey;
 
-    public AtomicAggregator(Function<T, V> argumentToMapKey) {
+    public StringAtomicToMapAggregatorImpl(Function<T, String> argumentToMapKey) {
         this.argumentToMapKey = argumentToMapKey;
     }
 
-    @Override
-    public void accept(T t, Map<V, AtomicInteger> map) {
+    public void accept(T t, Map<String, AtomicInteger> map) {
         map.merge(argumentToMapKey.apply(t), new AtomicInteger(1),
                 (oldVal, newVal) -> new AtomicInteger(oldVal.addAndGet(newVal.get())));
     }
+
+
+
 }

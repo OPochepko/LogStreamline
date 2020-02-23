@@ -4,7 +4,7 @@ import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
 
-public class TestLogLineSplitter implements LineSplitter<UserDateTimeMessageFileLine> {
+public class LogLineSplitter implements LineSplitter<UserDateTimeMessageFileLine> {
 
     @Override
     public UserDateTimeMessageFileLine apply(String fileLine) {
@@ -14,7 +14,7 @@ public class TestLogLineSplitter implements LineSplitter<UserDateTimeMessageFile
         return new UserDateTimeMessageFileLine(user, message, dateTime, fileLine);
     }
 
-    private String getMessageSubstring(String string){
+    private String getMessageSubstring(String string) {
         return string.substring(string.lastIndexOf("-") + 2);
     }
 

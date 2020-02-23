@@ -3,9 +3,8 @@ package logstreamline.filter;
 import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
-import java.util.function.Predicate;
 
-public class LocalDateTimeFileLineFilter<T extends UserDateTimeMessageFileLine> implements Predicate<T> {
+public class LocalDateTimeFileLineFilter implements UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> {
 
     private final LocalDateTime from;
     private final LocalDateTime to;
@@ -16,9 +15,8 @@ public class LocalDateTimeFileLineFilter<T extends UserDateTimeMessageFileLine> 
     }
 
     @Override
-    public boolean test(T userDateTimeMessageFileLine) {
-        return userDateTimeMessageFileLine.getDateTime().isAfter(from) && userDateTimeMessageFileLine.getDateTime().isBefore(to);
+    public boolean test(UserDateTimeMessageFileLine fileLine) {
+        return fileLine.getDateTime().isAfter(from) && fileLine.getDateTime().isBefore(to);
     }
-
 
 }

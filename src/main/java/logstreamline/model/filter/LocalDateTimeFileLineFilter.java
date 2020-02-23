@@ -4,6 +4,9 @@ import logstreamline.model.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
 
+/**
+ * UserDateTimeMessageFileLineFilter implementation  for filter UserDateTimeMessageFileLine instances by dateTime field.
+ */
 public class LocalDateTimeFileLineFilter implements UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> {
 
     private final LocalDateTime from;

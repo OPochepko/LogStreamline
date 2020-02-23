@@ -37,6 +37,31 @@ public class LogStreamLineService {
 
     private PrintWriter pw;
 
+    public void setAggregator(StringAtomicToMapAggregator<UserDateTimeMessageFileLine> aggregator) {
+        this.aggregator = aggregator;
+    }
+
+    public void run(String logInputPath, String resultOutPath, String filterUser, String filterFromDate,
+                    String filterToDate, String filterMessage, boolean aggregateByUser, String aggregateTimeUnit, int threadNum) throws IOException {
+
+        formFilter(filterUser, filterFromDate, filterToDate, filterMessage);
+        formAggregator(aggregateByUser, aggregateTimeUnit);
+        result = new ConcurrentHashMap<>();
+        splitter = new LogLineSplitter();
+        pw = new PrintWriter(Files.newBufferedWriter(Path.of(resultOutPath)));
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNum);
+        try (Stream<Path> paths = Files.walk(Path.of(logInputPath))) {
+            paths.filter(Files::isRegularFile)
+                    .forEach(inputFile -> {
+                        executor.execute(new LogStreamline(pw, result, inputFile, filter, splitter, aggregator));
+                    });
+            executor.shutdown();
+            while (!executor.isTerminated()) {
+            }
+            System.out.println(result);
+        }
+    }
+
     private void formAggregator(Boolean aggregateByUser, String aggregateTimeUnit) {
         if (aggregateByUser) addAggregator(new StringAtomicToMapAggregatorImpl<>(v -> v.getUser()));
         if (aggregateTimeUnit != null)
@@ -63,30 +88,5 @@ public class LogStreamLineService {
 
     private void setFilter(UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> filter) {
         this.filter = filter;
-    }
-
-    public void setAggregator(StringAtomicToMapAggregator<UserDateTimeMessageFileLine> aggregator) {
-        this.aggregator = aggregator;
-    }
-
-    public void run(String logInputPath, String resultOutPath, String filterUser, String filterFromDate,
-                    String filterToDate, String filterMessage, boolean aggregateByUser, String aggregateTimeUnit, int threadNum) throws IOException {
-
-        formFilter(filterUser, filterFromDate, filterToDate, filterMessage);
-        formAggregator(aggregateByUser, aggregateTimeUnit);
-        result = new ConcurrentHashMap<>();
-        splitter = new LogLineSplitter();
-        pw = new PrintWriter(Files.newBufferedWriter(Path.of(resultOutPath)));
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNum);
-        try (Stream<Path> paths = Files.walk(Path.of(logInputPath))) {
-            paths.filter(Files::isRegularFile)
-                    .forEach(inputFile -> {
-                        executor.execute(new LogStreamline(pw, result, inputFile, filter, splitter, aggregator));
-                    });
-            executor.shutdown();
-            while (!executor.isTerminated()) {
-            }
-            System.out.println(result);
-        }
     }
 }

@@ -1,7 +1,9 @@
 package logstreamline.model.filter;
 
 import logstreamline.model.fileline.UserDateTimeMessageFileLine;
-
+/**
+ * UserDateTimeMessageFileLineFilter implementation for filter UserDateTimeMessageFileLine instances by user field.
+ */
 public class UserFileLineFilter implements UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> {
 
     private final String user;

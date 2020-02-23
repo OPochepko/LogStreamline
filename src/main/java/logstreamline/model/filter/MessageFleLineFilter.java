@@ -1,6 +1,6 @@
-package logstreamline.filter;
+package logstreamline.model.filter;
 
-import logstreamline.fileline.UserDateTimeMessageFileLine;
+import logstreamline.model.fileline.UserDateTimeMessageFileLine;
 
 public class MessageFleLineFilter implements UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> {
     private final String regex;

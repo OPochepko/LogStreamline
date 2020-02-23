@@ -1,4 +1,4 @@
-package logstreamline.fileline;
+package logstreamline.model.fileline;
 
 import java.time.LocalDateTime;
 

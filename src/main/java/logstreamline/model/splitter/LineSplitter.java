@@ -1,4 +1,4 @@
-package logstreamline.splitter;
+package logstreamline.model.splitter;
 
 import java.util.function.Function;
 @FunctionalInterface

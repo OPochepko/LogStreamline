@@ -1,9 +1,9 @@
-package logstreamline;
+package logstreamline.model;
 
-import logstreamline.aggregator.StringAtomicToMapAggregator;
-import logstreamline.fileline.UserDateTimeMessageFileLine;
-import logstreamline.filter.UserDateTimeMessageFileLineFilter;
-import logstreamline.splitter.LineSplitter;
+import logstreamline.model.aggregator.StringAtomicToMapAggregator;
+import logstreamline.model.fileline.UserDateTimeMessageFileLine;
+import logstreamline.model.filter.UserDateTimeMessageFileLineFilter;
+import logstreamline.model.splitter.LineSplitter;
 
 import java.io.IOException;
 import java.io.PrintWriter;

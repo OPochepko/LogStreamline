@@ -1,4 +1,4 @@
-package logstreamline.command;
+package logstreamline;
 
 import logstreamline.service.LogStreamLineService;
 import picocli.CommandLine;
@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
         "Filters: " + "\n" +
         "You can use three kinds of filters(filter by User, filter by time period and by message pattern();" + "\n" +
         "Aggregators: " + "\n" +
-        "You can aggregate filtered data by User or by time Unit (e.g. SECONDS, MINUTES and other up to DAYS ChronoUnit values)" + "\n" +
+        "You can aggregate filtered data by User or by time Unit (SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)" + "\n" +
         "For example:" + "\n" +
         "   -in F:\\Temp\\LogStreamline\\testlogs -out F:\\Temp\\LogStreamline\\result.log -fu Mr.Meeseeks -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1" + "\n" +
         "will get all log message with user Mr.Meeseeks recorded from 2020-02-17T06:12:01 to 2020-05-02T06:12:01 and write to file result.log " + "\n" +
@@ -44,8 +44,8 @@ public class LogStreamLineCommand implements Callable<Integer> {
             "one aggregation should be used)", defaultValue = "true")
     private boolean aggregateByUser;
 
-    @CommandLine.Option(names = {"-at", "-aggregateTime"}, description = "Time unit to aggregate by time units(e.g. " +
-            "SECONDS, MINUTES and other ChronoUnit values up to DAYS)")
+    @CommandLine.Option(names = {"-at", "-aggregateTime"}, description = "Time unit to aggregate by time units(" +
+            "SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)")
     private String aggregateTimeUnit;
 
     @CommandLine.Option(names = {"-tn", "-threadNumber"}, description = "Number of threads to work", defaultValue = "1")

@@ -1,5 +1,7 @@
 package logstreamline.model.fileline;
 
+import com.google.common.base.Objects;
+
 import java.time.LocalDateTime;
 
 public class UserDateTimeMessageFileLine extends FileLine {
@@ -32,5 +34,18 @@ public class UserDateTimeMessageFileLine extends FileLine {
         return dateTime;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDateTimeMessageFileLine)) return false;
+        UserDateTimeMessageFileLine fileLine = (UserDateTimeMessageFileLine) o;
+        return Objects.equal(user, fileLine.user) &&
+                Objects.equal(message, fileLine.message) &&
+                Objects.equal(dateTime, fileLine.dateTime);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(user, message, dateTime);
+    }
 }

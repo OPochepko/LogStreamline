@@ -40,13 +40,6 @@ public class LogStreamline implements Runnable {
         this.aggregator = aggregator;
     }
 
-
-    //    public void printResult() {
-//        Map<String, AtomicInteger> sortedResult = new TreeMap<>(result);
-//        for (Map.Entry<String, AtomicInteger> entry : sortedResult.entrySet()) {
-//            System.out.println(entry.getKey() + ":" + entry.getValue());
-//
-//        }
     @Override
     public void run() {
         try {

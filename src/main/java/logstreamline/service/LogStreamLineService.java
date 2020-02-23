@@ -1,5 +1,6 @@
 package logstreamline.service;
 
+import logstreamline.model.FilterTimeUnit;
 import logstreamline.model.LogStreamline;
 import logstreamline.model.aggregator.StringAtomicToMapAggregator;
 import logstreamline.model.aggregator.StringAtomicToMapAggregatorImpl;
@@ -16,9 +17,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -58,7 +58,7 @@ public class LogStreamLineService {
             executor.shutdown();
             while (!executor.isTerminated()) {
             }
-            System.out.println(result);
+            printResult();
         }
     }
 
@@ -66,7 +66,7 @@ public class LogStreamLineService {
         if (aggregateByUser) addAggregator(new StringAtomicToMapAggregatorImpl<>(v -> v.getUser()));
         if (aggregateTimeUnit != null)
             addAggregator(new StringAtomicToMapAggregatorImpl<>(v ->
-                    v.getDateTime().truncatedTo(ChronoUnit.valueOf(aggregateTimeUnit)).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
+                    v.getDateTime().format(FilterTimeUnit.valueOf(aggregateTimeUnit).getFormatter())));
     }
 
     private void addAggregator(StringAtomicToMapAggregator<UserDateTimeMessageFileLine> aggregator) {
@@ -88,5 +88,13 @@ public class LogStreamLineService {
 
     private void setFilter(UserDateTimeMessageFileLineFilter<UserDateTimeMessageFileLine> filter) {
         this.filter = filter;
+    }
+
+    public void printResult() {
+        Map<String, AtomicInteger> sortedResult = new TreeMap<>(result);
+        for (Map.Entry<String, AtomicInteger> entry : sortedResult.entrySet()) {
+            System.out.println(entry.getKey() + ":      " + entry.getValue());
+
+        }
     }
 }

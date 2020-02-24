@@ -1,6 +1,7 @@
 package logstreamline;
 
 import logstreamline.service.LogStreamLineService;
+import logstreamline.service.LogStreamLineServiceImpl;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -13,9 +14,11 @@ import java.util.concurrent.Callable;
         "Aggregators: " + "\n" +
         "You can aggregate filtered data by User or by time Unit (SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)" + "\n" +
         "For example:" + "\n" +
-        "   -in F:\\Temp\\LogStreamline\\testlogs -out F:\\Temp\\LogStreamline\\result.log -fu Mr.Meeseeks -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1" + "\n" +
-        "will get all log message with user Mr.Meeseeks recorded from 2020-02-17T06:12:01 to 2020-05-02T06:12:01 and write to file result.log " + "\n" +
-        "aggregated by users and days result will be printed to console"
+        "   -in F:\\Temp\\LogStreamline\\testlogs -out F:\\Temp\\LogStreamline\\result.log -fu ElonTusk -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1" + "\n" +
+        "will get all log message with user ElonTusk recorded from 2020-02-17T06:12:01 to 2020-05-02T06:12:01 and write to file result.log " + "\n" +
+        "aggregated by users and days result will be printed to console" + "\n" +
+        "Example of the format StreamLine can work with by default:" + "" + "\n" +
+        "'[main] DEBUG - User : ElonTusk; 2020-02-29T06:49:16.9736776 - ElonTusk bought Flurbo.'"
 
 })
 public class LogStreamLineCommand implements Callable<Integer> {
@@ -44,7 +47,7 @@ public class LogStreamLineCommand implements Callable<Integer> {
             "one aggregation should be used)", defaultValue = "true")
     private boolean aggregateByUser;
 
-    @CommandLine.Option(names = {"-at", "-aggregateTime"}, description = "Time unit to aggregate by time units(" +
+    @CommandLine.Option(names = {"-at", "-aggregateTime"}, description = "Time unit to aggregate by (" +
             "SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)")
     private String aggregateTimeUnit;
 
@@ -57,7 +60,7 @@ public class LogStreamLineCommand implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        LogStreamLineService service = new LogStreamLineService();
+        LogStreamLineService service = new LogStreamLineServiceImpl();
         service.run(logInputPath, resultOutPath, filterUser, filterFromDate, filterToDate, filterMessage, aggregateByUser,
                 aggregateTimeUnit, threadNum);
         return 1;

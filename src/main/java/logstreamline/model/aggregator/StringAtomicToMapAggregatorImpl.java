@@ -25,7 +25,7 @@ public class StringAtomicToMapAggregatorImpl<T extends FileLine> implements Stri
     }
 
     /**
-     * functional method. That map first argument to String гыштп argumentToMapKey and then accumulate quantity of this String to map
+     * functional method. That map first argument to String using argumentToMapKey and then accumulate quantity of this String to map
      *
      * @param t   - given parameter
      * @param map - map to accumulate

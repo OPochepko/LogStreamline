@@ -16,10 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public interface StringAtomicToMapAggregator<T extends FileLine> extends ToMapAggregator<T, String, AtomicInteger> {
     /**
      * Returns a composed StringAtomicToMapAggregator that performs, in sequence, this
-     * operation followed by the after operation. If performing either
-     * operation throws an exception, it is relayed to the caller of the
-     * composed operation.  If performing this operation throws an exception,
-     * the {@code after} operation will not be performed.
+     * operation followed by the after operation.
      *
      * @param after the operation to perform after this operation
      * @return a composed StringAtomicToMapAggregator that performs in sequence this

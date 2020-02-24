@@ -5,6 +5,7 @@
 <h3><p>Aggregators:<p></h3>
 <p>You can aggregate filtered data by User or by time Unit (SECONDS, MINUTES,HOURS, DAYS, MONTHS, YEARS)<p>
 <h3><p>For example:<p></h3>
+<p>-h argument will show you HELP<p>
 <p>-in F:\Temp\LogStreamline\testlogs -out F:\Temp\LogStreamline\result.log -fu
 ElonTusk -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1<p>
 <p>will get all log message with user ElonTusk recorded from 2020-02-17T06:12:01

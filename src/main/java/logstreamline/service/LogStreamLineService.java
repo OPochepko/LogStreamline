@@ -1,6 +1,11 @@
 package logstreamline.service;
 
+import logstreamline.AggregateTimeUnit;
+
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+
 public interface LogStreamLineService {
-    void run(String logInputPath, String resultOutPath, String filterUser, String filterFromDate,
-             String filterToDate, String filterMessage, boolean aggregateByUser, String aggregateTimeUnit, int threadNum) throws Exception;
+    void run(Path logInputPath, Path resultOutPath, String filterUser, LocalDateTime filterFromDate,
+             LocalDateTime filterToDate, String filterMessage, boolean aggregateByUser, AggregateTimeUnit aggregateTimeUnit, int threadNum) throws Exception;
 }

@@ -1,4 +1,4 @@
-package logstreamline.model.fileline;
+package logstreamline.fileline;
 
 import com.google.common.base.Objects;
 

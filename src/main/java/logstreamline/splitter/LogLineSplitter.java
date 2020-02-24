@@ -1,6 +1,6 @@
-package logstreamline.model.splitter;
+package logstreamline.splitter;
 
-import logstreamline.model.fileline.UserDateTimeMessageFileLine;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
 

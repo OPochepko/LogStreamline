@@ -1,6 +1,6 @@
-package logstreamline.model.aggregator;
+package logstreamline.aggregator;
 
-import logstreamline.model.fileline.FileLine;
+import logstreamline.fileline.FileLine;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;

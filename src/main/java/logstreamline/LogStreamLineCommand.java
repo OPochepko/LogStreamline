@@ -4,6 +4,8 @@ import logstreamline.service.LogStreamLineService;
 import logstreamline.service.LogStreamLineServiceImpl;
 import picocli.CommandLine;
 
+import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.concurrent.Callable;
 
 
@@ -68,8 +70,8 @@ public class LogStreamLineCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         LogStreamLineService service = new LogStreamLineServiceImpl();
-        service.run(logInputPath, resultOutPath, filterUser, filterFromDate, filterToDate, filterMessage, aggregateByUser,
-                aggregateTimeUnit, threadNum);
+        service.run(Path.of(logInputPath), Path.of(resultOutPath), filterUser, LocalDateTime.parse(filterFromDate), LocalDateTime.parse(filterToDate), filterMessage, aggregateByUser,
+                AggregateTimeUnit.valueOf(aggregateTimeUnit), threadNum);
         return 1;
     }
 

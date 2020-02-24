@@ -1,6 +1,6 @@
-package logstreamline.model.filter;
+package logstreamline.filter;
 
-import logstreamline.model.fileline.FileLine;
+import logstreamline.fileline.FileLine;
 
 import java.util.function.Predicate;
 

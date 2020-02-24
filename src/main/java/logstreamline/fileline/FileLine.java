@@ -1,4 +1,4 @@
-package logstreamline.model.fileline;
+package logstreamline.fileline;
 
 abstract public class FileLine {
     private final String fileLine;

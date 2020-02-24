@@ -1,4 +1,4 @@
-package logstreamline.model.splitter;
+package logstreamline.splitter;
 
 import java.util.function.Function;
 

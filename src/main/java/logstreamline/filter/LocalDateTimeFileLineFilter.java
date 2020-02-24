@@ -1,6 +1,6 @@
-package logstreamline.model.filter;
+package logstreamline.filter;
 
-import logstreamline.model.fileline.UserDateTimeMessageFileLine;
+import logstreamline.fileline.UserDateTimeMessageFileLine;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-<h2><p>LogStreamlin</p></h2>
+<h2><p>LogStreamline</p></h2>
 <p>CLI application for processing log files by filtering and aggregation.<p>
 <h3><p>Filters:<p></h3>
 <p>You can use three kinds of filters(filter by User, filter by time period and by message pattern.<p>

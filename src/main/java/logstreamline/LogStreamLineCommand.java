@@ -7,20 +7,28 @@ import picocli.CommandLine;
 import java.util.concurrent.Callable;
 
 
-@CommandLine.Command(name = "streamline", mixinStandardHelpOptions = true, description = {"This application can be used " +
-        "for processing log files by filtering and aggregation. " + "\n" +
-        "Filters: " + "\n" +
-        "You can use three kinds of filters(filter by User, filter by time period and by message pattern();" + "\n" +
-        "Aggregators: " + "\n" +
-        "You can aggregate filtered data by User or by time Unit (SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)" + "\n" +
-        "For example:" + "\n" +
-        "   -in F:\\Temp\\LogStreamline\\testlogs -out F:\\Temp\\LogStreamline\\result.log -fu ElonTusk -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1" + "\n" +
-        "will get all log message with user ElonTusk recorded from 2020-02-17T06:12:01 to 2020-05-02T06:12:01 and write to file result.log " + "\n" +
-        "aggregated by users and days result will be printed to console" + "\n" +
-        "Example of the format StreamLine can work with by default:" + "" + "\n" +
-        "'[main] DEBUG - User : ElonTusk; 2020-02-29T06:49:16.9736776 - ElonTusk bought Flurbo.'"
+@CommandLine.Command(name = "streamline", mixinStandardHelpOptions = true,
+        header = "    __                _____ __                            ___          \n" +
+                "   / /   ____  ____ _/ ___// /_________  ____ _____ ___  / (_)___  ___ \n" +
+                "  / /   / __ \\/ __ `/\\__ \\/ __/ ___/ _ \\/ __ `/ __ `__ \\/ / / __ \\/ _ \\\n" +
+                " / /___/ /_/ / /_/ /___/ / /_/ /  /  __/ /_/ / / / / / / / / / / /  __/\n" +
+                "/_____/\\____/\\__, //____/\\__/_/   \\___/\\__,_/_/ /_/ /_/_/_/_/ /_/\\___/ \n" +
+                "            /____/                                                     ",
 
-})
+        description = {"This application can be used " +
+                "for processing log files by filtering and aggregation. " + "\n" +
+                "Filters: " + "\n" +
+                "You can use three kinds of filters(filter by User, filter by time period and by message pattern();" + "\n" +
+                "Aggregators: " + "\n" +
+                "You can aggregate filtered data by User or by time Unit (SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS)" + "\n" +
+                "For example:" + "\n" +
+                "   -in F:\\Temp\\LogStreamline\\testlogs -out F:\\Temp\\LogStreamline\\result.log -fu ElonTusk -at DAYS -ft 2020-05-02T06:12:01 -ff 2020-02-17T06:12:01 -tn 1" + "\n" +
+                "will get all log message with user ElonTusk recorded from 2020-02-17T06:12:01 to 2020-05-02T06:12:01 and write to file result.log " + "\n" +
+                "aggregated by users and days result will be printed to console" + "\n" +
+                "Example of the format StreamLine can work with by default:" + "" + "\n" +
+                "'[main] DEBUG - User : ElonTusk; 2020-02-29T06:49:16.9736776 - ElonTusk bought Flurbo.'"
+
+        })
 public class LogStreamLineCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-in", "-inputPath"}, description = "Path to input(File or Directory)")
@@ -43,8 +51,7 @@ public class LogStreamLineCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-fm", "-filterMessage"}, description = "Regex for filter by message with", defaultValue = "(?s).*")
     private String filterMessage;
 
-    @CommandLine.Option(names = {"-au", "-aggregateByUser"}, description = "Enable aggregation of result by user(at least " +
-            "one aggregation should be used)", defaultValue = "true")
+    @CommandLine.Option(names = {"-au", "-aggregateByUser"}, description = "Enable aggregation of result by user", defaultValue = "true")
     private boolean aggregateByUser;
 
     @CommandLine.Option(names = {"-at", "-aggregateTime"}, description = "Time unit to aggregate by (" +
